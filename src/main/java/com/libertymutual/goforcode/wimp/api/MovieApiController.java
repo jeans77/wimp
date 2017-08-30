@@ -21,7 +21,7 @@ import com.libertymutual.goforcode.wimp.services.MovieRepo;
 public class MovieApiController {
 
 	private MovieRepo movieRepo;
-	
+
 	public MovieApiController(MovieRepo movieRepo) {
 		this.movieRepo = movieRepo;
 		Movie movie = new Movie();
@@ -33,7 +33,7 @@ public class MovieApiController {
 	public List<Movie> getAll() {
 		return movieRepo.findAll();
 	}
-	
+
 	@GetMapping("{id}")
 	public Movie getOne(@PathVariable long id) throws StuffNotFoundException {
 		Movie movie = movieRepo.findOne(id);
@@ -49,7 +49,7 @@ public class MovieApiController {
 	}
 
 	@PutMapping("{id}")
-	public Movie update(@RequestBody Movie movie,@PathVariable long id) {
+	public Movie update(@RequestBody Movie movie, @PathVariable long id) {
 		movie.setId(id);
 		return movieRepo.save(movie);
 	}

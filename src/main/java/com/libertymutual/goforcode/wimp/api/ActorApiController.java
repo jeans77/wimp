@@ -21,26 +21,25 @@ import com.libertymutual.goforcode.wimp.services.ActorRepo;
 public class ActorApiController {
 
 	private ActorRepo actorRepo;
-	
+
 	public ActorApiController(ActorRepo actorRepo) {
 		this.actorRepo = actorRepo;
-		
-		
-//		actorRepo.save(new Actor("", "",) new Date(Date.parse("8/23/1999");
-//		actor.setBirthDate(new Date(Date.parse("8/23/1972")))
-		
+
+		// actorRepo.save(new Actor("", "",) new Date(Date.parse("8/23/1999");
+		// actor.setBirthDate(new Date(Date.parse("8/23/1972")))
+
 		Actor actor = new Actor();
-		actorRepo.save(new Actor("actor1firstname","actor1lasttname" ));
-		actorRepo.save(new Actor("actor2firstname","actor2lasttname" ));
-		actorRepo.save(new Actor("actor3firstname","actor3lasttname" ));
-		actorRepo.save(new Actor("actor4firstname","actor4lasttname" ));
+		actorRepo.save(new Actor("actor1firstname", "actor1lasttname"));
+		actorRepo.save(new Actor("actor2firstname", "actor2lasttname"));
+		actorRepo.save(new Actor("actor3firstname", "actor3lasttname"));
+		actorRepo.save(new Actor("actor4firstname", "actor4lasttname"));
 	}
-	
+
 	@GetMapping("")
 	public List<Actor> getAll() {
 		return actorRepo.findAll();
 	}
-	
+
 	@GetMapping("{id}")
 	public Actor getOne(@PathVariable long id) throws StuffNotFoundException {
 		Actor actor = actorRepo.findOne(id);
@@ -49,14 +48,14 @@ public class ActorApiController {
 		}
 		return actor;
 	}
-	
+
 	@PostMapping("")
 	public Actor create(@RequestBody Actor actor) {
 		return actorRepo.save(actor);
 	}
-	
+
 	@PutMapping("{id}")
-	public Actor update(@RequestBody Actor actor,@PathVariable long id) {
+	public Actor update(@RequestBody Actor actor, @PathVariable long id) {
 		actor.setId(id);
 		return actorRepo.save(actor);
 	}
@@ -72,5 +71,5 @@ public class ActorApiController {
 			return null;
 		}
 	}
-	
+
 }

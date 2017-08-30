@@ -52,21 +52,20 @@ public class Movie {
 	}
 
 	@Id
-	
-	@GeneratedValue(strategy=GenerationType.AUTO)
+
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column(nullable=false, length=300)
+
+	@Column(nullable = false, length = 300)
 	private String title;
-	
-	
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private Date releaseDate;
-	
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private long budget;
-	
-	@Column(nullable=true)
+
+	@Column(nullable = true, length = 500)
 	private String distributor;
-		
-		}
+
+}

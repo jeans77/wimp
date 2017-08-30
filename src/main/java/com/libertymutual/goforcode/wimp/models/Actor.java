@@ -10,9 +10,10 @@ import javax.persistence.Id;
 
 @Entity
 public class Actor {
-	
-	public Actor() {}
-	
+
+	public Actor() {
+	}
+
 	public Actor(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -67,22 +68,22 @@ public class Actor {
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-				
-	@Column(nullable=false, length=75)
+
+	@Column(nullable = false, length = 75)
 	private String firstName;
-				
-	@Column(nullable=true, length=75)
+
+	@Column(nullable = true, length = 75)
 	private String lastName;
-						
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private long activeSinceYear;
-				
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private String distributor;
-				
-	@Column(nullable=true)
+
+	@Column(nullable = true)
 	private Date birthDate;
-		
-	}
+
+}
