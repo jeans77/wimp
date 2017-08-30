@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.libertymutual.goforcode.wimp.models.Actor;
+import com.libertymutual.goforcode.wimp.models.ActorWithMovies;
+import com.libertymutual.goforcode.wimp.models.Movie;
 import com.libertymutual.goforcode.wimp.services.ActorRepo;
+import com.libertymutual.goforcode.wimp.services.MovieRepo;
 
 @RestController
 @RequestMapping("/api/actors")
@@ -21,18 +24,15 @@ import com.libertymutual.goforcode.wimp.services.ActorRepo;
 public class ActorApiController {
 
 	private ActorRepo actorRepo;
+	private MovieRepo movieRepo;
+
 
 	public ActorApiController(ActorRepo actorRepo) {
 		this.actorRepo = actorRepo;
 
 		// actorRepo.save(new Actor("", "",) new Date(Date.parse("8/23/1999");
 		// actor.setBirthDate(new Date(Date.parse("8/23/1972")))
-
-		Actor actor = new Actor();
-		actorRepo.save(new Actor("actor1firstname", "actor1lasttname"));
-		actorRepo.save(new Actor("actor2firstname", "actor2lasttname"));
-		actorRepo.save(new Actor("actor3firstname", "actor3lasttname"));
-		actorRepo.save(new Actor("actor4firstname", "actor4lasttname"));
+		
 	}
 
 	@GetMapping("")
@@ -46,7 +46,14 @@ public class ActorApiController {
 		if (actor == null) {
 			throw new StuffNotFoundException();
 		}
-		return actor;
+		ActorWithMovies newActor = new ActorWithMovies();
+		newActor.setActiveSinceYear(actor.getActiveSinceYear());
+		newActor.setBirthDate(actor.getBirthDate());
+		newActor.setMovies(actor.getMovies());
+		newActor.setFirstName(actor.getFirstName());
+		newActor.setLastName(actor.getLastName());
+		
+		return newActor;
 	}
 
 	@PostMapping("")
@@ -54,6 +61,11 @@ public class ActorApiController {
 		return actorRepo.save(actor);
 	}
 
+//	@PostMapping("")
+//	public Cereal create(@RequestBody Cereal cereal) {
+//		return cerealRepo.save(cereal);
+//	}
+	
 	@PutMapping("{id}")
 	public Actor update(@RequestBody Actor actor, @PathVariable long id) {
 		actor.setId(id);
@@ -70,6 +82,17 @@ public class ActorApiController {
 		} catch (org.springframework.dao.EmptyResultDataAccessException erdae) {
 			return null;
 		}
+	}
+
+	@PostMapping("{actorId}/movie")
+	public Actor  associateAnMovie(@PathVariable long actorId, @RequestBody Movie movie) {
+		Actor actor = actorRepo.findOne(actorId);
+		movie = movieRepo.findOne(movie.getId());
+		
+		actor.getMovies().add(movie);
+		actorRepo.save(actor);
+		
+		return actor;
 	}
 
 }

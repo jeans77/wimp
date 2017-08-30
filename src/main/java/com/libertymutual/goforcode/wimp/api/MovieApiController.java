@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.libertymutual.goforcode.wimp.models.Actor;
 import com.libertymutual.goforcode.wimp.models.Movie;
+import com.libertymutual.goforcode.wimp.services.ActorRepo;
 import com.libertymutual.goforcode.wimp.services.MovieRepo;
 
 @RestController
@@ -21,14 +22,22 @@ import com.libertymutual.goforcode.wimp.services.MovieRepo;
 public class MovieApiController {
 
 	private MovieRepo movieRepo;
+	private ActorRepo actorRepo;
 
-	public MovieApiController(MovieRepo movieRepo) {
+//	public MovieApiController(MovieRepo movieRepo, ActorRepo actorRepo) {
+//		this.movieRepo = movieRepo;
+//		Movie movie = new Movie();
+//		movie.setTitle("movieTitle1");
+//		movie.setActors(actorRepo.findAll());
+//		movieRepo.save(movie);
+//		
+//	}
+	
+	public MovieApiController(MovieRepo movieRepo, ActorRepo actorRepo) {
 		this.movieRepo = movieRepo;
-		Movie movie = new Movie();
-		movie.setTitle("movieTitle1");
-		movieRepo.save(movie);
+		this.actorRepo = actorRepo;
 	}
-
+	
 	@GetMapping("")
 	public List<Movie> getAll() {
 		return movieRepo.findAll();
@@ -64,6 +73,17 @@ public class MovieApiController {
 		} catch (org.springframework.dao.EmptyResultDataAccessException erdae) {
 			return null;
 		}
+	}
+
+	@PostMapping("{movieId}/actors")
+	public Movie  associateAnActor(@PathVariable long movieId, @RequestBody Actor actor) {
+		Movie movie = movieRepo.findOne(movieId);
+		actor = actorRepo.findOne(actor.getId());
+		
+		movie.getActors().add(actor);
+		movieRepo.save(movie);
+		
+		return movie;
 	}
 
 }
