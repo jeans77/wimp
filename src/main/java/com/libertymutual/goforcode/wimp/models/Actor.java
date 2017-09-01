@@ -14,17 +14,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(
-		generator=ObjectIdGenerators.PropertyGenerator.class,
-		property="id"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
 @Entity
 public class Actor {
 
-//	@ManyToOne
-//	private CerealManufacturer manufacturer;
-	
+	// @ManyToOne
+	// private CerealManufacturer manufacturer;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -43,17 +40,19 @@ public class Actor {
 
 	@Column(nullable = true)
 	private Date birthDate;
+
 	public List<Movie> getMovies() {
 		return movies;
 	}
 
-	public Actor() {}
+	public Actor() {
+	}
 
 	public Actor(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -101,15 +100,13 @@ public class Actor {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy="actors")
-	private List<Movie> movies;
-	
 
+	@JsonIgnore
+	@ManyToMany(mappedBy = "actors")
+	private List<Movie> movies;
 
 	public void setMovies(List<Movie> movies) {
 		this.movies = movies;
 	}
-	
+
 }

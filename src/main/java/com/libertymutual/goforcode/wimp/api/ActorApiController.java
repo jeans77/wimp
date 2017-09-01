@@ -26,13 +26,9 @@ public class ActorApiController {
 	private ActorRepo actorRepo;
 	private MovieRepo movieRepo;
 
-
 	public ActorApiController(ActorRepo actorRepo) {
 		this.actorRepo = actorRepo;
 
-		// actorRepo.save(new Actor("", "",) new Date(Date.parse("8/23/1999");
-		// actor.setBirthDate(new Date(Date.parse("8/23/1972")))
-		
 	}
 
 	@GetMapping("")
@@ -52,7 +48,8 @@ public class ActorApiController {
 		newActor.setMovies(actor.getMovies());
 		newActor.setFirstName(actor.getFirstName());
 		newActor.setLastName(actor.getLastName());
-		
+		newActor.setId(id);
+
 		return newActor;
 	}
 
@@ -61,11 +58,11 @@ public class ActorApiController {
 		return actorRepo.save(actor);
 	}
 
-//	@PostMapping("")
-//	public Cereal create(@RequestBody Cereal cereal) {
-//		return cerealRepo.save(cereal);
-//	}
-	
+	// @PostMapping("")
+	// public Cereal create(@RequestBody Cereal cereal) {
+	// return cerealRepo.save(cereal);
+	// }
+
 	@PutMapping("{id}")
 	public Actor update(@RequestBody Actor actor, @PathVariable long id) {
 		actor.setId(id);
@@ -82,17 +79,6 @@ public class ActorApiController {
 		} catch (org.springframework.dao.EmptyResultDataAccessException erdae) {
 			return null;
 		}
-	}
-
-	@PostMapping("{actorId}/movie")
-	public Actor  associateAnMovie(@PathVariable long actorId, @RequestBody Movie movie) {
-		Actor actor = actorRepo.findOne(actorId);
-		movie = movieRepo.findOne(movie.getId());
-		
-		actor.getMovies().add(movie);
-		actorRepo.save(actor);
-		
-		return actor;
 	}
 
 }

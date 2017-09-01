@@ -14,10 +14,7 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(
-		generator=ObjectIdGenerators.PropertyGenerator.class,
-		property="id"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Movie {
 
@@ -37,13 +34,14 @@ public class Movie {
 
 	@Column(nullable = true, length = 500)
 	private String distributor;
-	
-	public Movie() {};
-	
+
+	public Movie() {
+	};
+
 	public Movie(String title) {
 		this.title = title;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -83,18 +81,18 @@ public class Movie {
 	public void setDistributor(String distributor) {
 		this.distributor = distributor;
 	}
-	
+
 	@ManyToMany
 	private List<Actor> actors;
-	
+
 	public void setActors(List<Actor> actors) {
 		this.actors = actors;
 	}
-	
+
 	public List<Actor> getActors() {
 		return actors;
 	}
-	
+
 	public void addActor(Actor actor) {
 		if (actors == null) {
 			actors = new ArrayList<Actor>();
